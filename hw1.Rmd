@@ -4,9 +4,9 @@ header-includes:
 - \setmainfont{Helvetica Neue}
 - \setjamainfont{Hiragino Kaku Gothic Pro}
 output:
-  html_document: default
   pdf_document:
     latex_engine: xelatex
+  html_document: default
 ---
 \fontsize{10}{11}
 ```{r setup, include=FALSE}
@@ -52,7 +52,7 @@ length(Gross_Income)
 length(Net_Income)
 ```
 
-　残念ながら、Rには度数分布表を作る関数が用意されていません。このため、ここでは自分で関数を定義することにします。以下のコードをコンソールに入力して下さい（各行の「`#`」以降は説明のためのコメントでありコードの実行内容には影響しないため、無視してOKです）。現段階では詳しい中身を理解する必要はありません。なお、下記コードは http://rplus.wb-nahce.info/rsemi_stat_basic/r_dosuubunnpuhyou_sakusei.html を修正のうえ転用しました。
+　残念ながら、Rには度数分布表を作る関数が用意されていません。このため、ここでは自分で関数を定義することにします。以下のコードをコンソールに入力して下さい（各行の「`#`」以降は説明のためのコメントでコードの実行内容には影響しないため、無視してOKです）。現時点では詳しい中身を理解する必要はありません。なお、下記コードは http://rplus.wb-nahce.info/rsemi_stat_basic/r_dosuubunnpuhyou_sakusei.html を修正のうえ転用しました。
 
 ```{r q1-table-function}
 freqtab <- function( # 度数分布表を作成する関数を定義する
@@ -82,7 +82,7 @@ freqtab <- function( # 度数分布表を作成する関数を定義する
 　それでは早速、平均月収の度数分布表を作成しましょう。階級の幅は$100000$円に指定します。
 
 ```{r q1-gross-table}
-freqtab(Gross_Income, wid=100000) # 階級の幅を100000に指定
+freqtab(Gross_Income, wid=100000) # 度数分布表を作成。階級の幅は100000に指定
 ```
 
 　上の度数分布表において、`freq`が度数、`percent`が相対度数（$\%$）、`cum.pcnt`が累積相対度数（$\%$）を表しています。
@@ -90,13 +90,13 @@ freqtab(Gross_Income, wid=100000) # 階級の幅を100000に指定
 　実質手取りの度数分布表も同じように作成しましょう。
 
 ```{r q1-net-table}
-freqtab(Net_Income, wid=100000) # 階級の幅を100000に指定
+freqtab(Net_Income, wid=100000) # 度数分布表を作成。階級の幅は100000に指定
 ```
 
 　一方、ヒストグラムは`hist()`という関数で簡単に作成できます。単純に`hist(Gross_Income)`とすれば、平均月収のヒストグラムができます。
 
 ```{r q1-gross-hist}
-hist(Gross_Income)
+hist(Gross_Income)　# ヒストグラムを描く
 ```
 
 　`hist`関数に渡す変数を変えることで、ヒストグラムの階級の数やラベルなどを指定できます。平均月収のヒストグラムを見やすくするため、タイトルとラベル、色を変更してみましょう。
@@ -151,7 +151,7 @@ sd(IncB)
 　ちなみに、この結果は`boxplot()`という関数を使って「箱ひげ図」で表示すると見た目にも分かりやすくなります。以下のように、A国はB国に比べて狭い月収の範囲にデータが集中していることが明らかです。
 
 ```{r q2-boxplot, fig.height=3.7}
-boxplot(IncA, IncB, 
+boxplot(IncA, IncB, # 箱ひげ図を描く
         names=c("Country A", "Country B"), main="Monthly income",　# ラベルやタイトルを指定
         cex.main=0.9, cex.axis=0.8, cex.lab=0.8) # 文字のサイズを指定
 ```
@@ -174,7 +174,7 @@ summary(IncB)
 　平均値$53$、分散$400$の正規分布のグラフは以下のようになります。標準偏差は$\sqrt{400} = 20$であることに注意しましょう。
 
 ```{r q3-norm-1}
-curve(dnorm(x, mean=53, sd=20), 
+curve(dnorm(x, mean=53, sd=20), # 平均値53、分散400の正規分布を描く
       from=0, to=110, # 横軸は0〜110に指定
       cex.axis=0.8, cex.lab=0.8)　# 文字のサイズを指定
 ```
@@ -182,10 +182,10 @@ curve(dnorm(x, mean=53, sd=20),
 　次に平均値$30$、分散$9$（標準偏差は$\sqrt{9} = 3$）の正規分布のグラフを描きます。なお、ここでは上で描いた正規分布との違いが分かりやすいように、$2$つのグラフを重ねて表示することにします。グラフの縦軸が先ほどと変わっている点に注意して下さい。
 
 ```{r q3-norm-2, fig.height=3.7}
-curve(dnorm(x, mean=30, sd=3), 
-      from=0, to=110, col="red", ylab="",
-      cex.main=0.9, cex.axis=0.8, cex.lab=0.8) #　平均値30、分散9の正規分布を描く（色は赤）
-curve(dnorm(x, mean=53, sd=20), add=TRUE) #　平均値53、分散400の正規分布を重ねて表示（色は黒）
+curve(dnorm(x, mean=30, sd=3), # 平均値30、分散9の正規分布を描く
+      from=0, to=110, col="red", ylab="", # グラフの範囲やラベルを指定。色は赤
+      cex.main=0.9, cex.axis=0.8, cex.lab=0.8) #　文字サイズを指定
+curve(dnorm(x, mean=53, sd=20), add=TRUE) #　平均値53、分散400の正規分布を重ねて表示
 label <- c("mean=30, sd=3", "mean=53, sd=20")　# 凡例に表示するラベルを定義
 color <- c("red", "black") # 2つのグラフの色分け
 legend("topright", legend=label, col=color, lty=c(1, 1), cex=0.8)　# 凡例を作成
@@ -199,7 +199,7 @@ legend("topright", legend=label, col=color, lty=c(1, 1), cex=0.8)　# 凡例を�
 
 ### 問4
 
-　北緯と平均気温をそれぞれ`hokui`、`kion`という名前の変数として定義します。
+　北緯と平均気温をそれぞれ`Hokui`、`Kion`という名前の変数として定義します。
 
 ```{r q4-data}
 Hokui <- c(0, 35, 30, 70, 10, 45, 60, 80, 15,　25)
